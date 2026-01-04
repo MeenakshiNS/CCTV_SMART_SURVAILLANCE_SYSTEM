@@ -1,1 +1,7 @@
-Resources/Videos/
+env/
+dataset/
+final_theft_model/
+theft_model_output/
+Resources/
+__pycache__/
+*.pyc
