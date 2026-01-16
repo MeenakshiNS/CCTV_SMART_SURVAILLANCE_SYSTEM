@@ -25,10 +25,10 @@ from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 
 
 # Root project path
-PROJECT_DIR = r"C:\Users\SHIRAN S K\Desktop\Projects\Surveillance\new"
+PROJECT_DIR = r"C:\Users\admin\Desktop\Surveillance\Surveillance"
 
 # path containing test videos
-TEST_DIR = r"C:\Users\SHIRAN S K\Desktop\Projects\Surveillance\new\dataset\test"
+TEST_DIR = r"C:\Users\admin\Desktop\Surveillance\Surveillance\dataset\test"
 
 # path containing the VideoMAE model
 MODEL_DIR = os.path.join(PROJECT_DIR, "final_theft_model")
@@ -52,7 +52,7 @@ class TheftDataset(Dataset):
     def __init__(self, root_dir, transform=None):
         self.video_paths = []
         self.labels = []
-        self.transform = transform
+        self.transform = transform 
 
         # Mapping class names to numeric labels
         self.label_map = {"normal": 0, "theft": 1}
@@ -92,7 +92,7 @@ class TheftDataset(Dataset):
 
         # Return input tensor and corresponding label
         return {
-            "pixel_values": frames,
+            "pixel_values": frames, #tensor value
             "labels": torch.tensor(self.labels[idx])
         }
 
@@ -105,8 +105,8 @@ def compute_metrics(eval_pred):
     """
     logits, labels = eval_pred
 
-    # Convert logits to predicted class indices
-    preds = np.argmax(logits, axis=1)
+    # Convert logits to predicted class indices (logits is a list of scores)
+    preds = np.argmax(logits, axis=1)  
 
     # Calculate evaluation metrics
     acc = accuracy_score(labels, preds)
@@ -126,7 +126,7 @@ def compute_metrics(eval_pred):
 def main():
     # Load VideoMAE image processor for normalization values
     processor = VideoMAEImageProcessor.from_pretrained(BASE_CKPT)
-    mean = processor.image_mean
+    mean = processor.image_mean #keep lighting/brightness of new videos consistent for new videos
     std = processor.image_std
 
     # Define video preprocessing pipeline
@@ -143,7 +143,7 @@ def main():
 
     # Load trained VideoMAE classification model
     model = VideoMAEForVideoClassification.from_pretrained(MODEL_DIR)
-
+ 
     # Define evaluation configuration
     args = TrainingArguments(
         output_dir=os.path.join(PROJECT_DIR, "eval_output"),
