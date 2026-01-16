@@ -21,7 +21,7 @@ from transformers import (
 )
 
 # Root project path
-PROJECT_DIR = r"C:\Users\SHIRAN S K\Desktop\Projects\Surveillance\new"
+PROJECT_DIR = r"C:\Users\admin\Desktop\Surveillance\Surveillance"
 
 # Dataset root path
 DATASET_DIR = os.path.join(PROJECT_DIR, "dataset")
